@@ -1,0 +1,16 @@
+{
+  "name": "homeassistant-supabase-export",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.8.0",
+    "astro": "^2.0.15"
+  }
+}

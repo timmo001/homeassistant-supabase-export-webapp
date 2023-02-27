@@ -1,0 +1,87 @@
+---
+import { createClient } from "@supabase/supabase-js";
+import type {
+  HomeAssistantEntity,
+  HomeAssistantMetadata,
+} from "../types/homeassistant";
+
+let homeassistant_entities: Array<HomeAssistantEntity> | undefined = undefined,
+  homeassistant_metadata: HomeAssistantMetadata | undefined = undefined;
+
+const supabase = createClient(
+  import.meta.env.SUPABASE_URL,
+  import.meta.env.SUPABASE_KEY
+);
+const { data: homeassistant_metadata_response } = await supabase
+  .from("homeassistant_metadata")
+  .select("*")
+  .single();
+homeassistant_metadata =
+  homeassistant_metadata_response as unknown as HomeAssistantMetadata;
+
+if (homeassistant_metadata?.provisioned) {
+  // console.log("Provisioned");
+  let { data: homeassistant_entities_response } = await supabase
+    .from("homeassistant_entities")
+    .select("*")
+    .order("created_at", { ascending: false });
+  homeassistant_entities =
+    homeassistant_entities_response as unknown as Array<HomeAssistantEntity>;
+} else {
+  // console.log("Not provisioned");
+}
+
+const homeassistant_entities_per_entity = homeassistant_entities?.reduce(
+  (entities, entity) => {
+    if (entities[entity.entity_id]) {
+      entities[entity.entity_id].push(entity);
+    } else {
+      entities[entity.entity_id] = [entity];
+    }
+    return entities;
+  },
+  {} as Record<string, Array<HomeAssistantEntity>>
+);
+
+const homeassistant_entities_per_entity_ordered =
+  homeassistant_entities_per_entity
+    ? Object.entries(homeassistant_entities_per_entity).sort(
+        ([oldId], [newId]) => oldId.localeCompare(newId)
+      )
+    : undefined;
+---
+
+{
+  homeassistant_metadata?.provisioned ? (
+    <div>
+      {homeassistant_entities_per_entity_ordered ? (
+        <ul>
+          {homeassistant_entities_per_entity_ordered.map(
+            ([entity_id, states]) => (
+              <li>
+                <h3>{states[0].attributes?.friendly_name || entity_id}</h3>
+                <p>
+                  {`${states[0].state}${states[0].attributes?.unit_of_measurement}`}
+                  <br />({states.length} records)
+                </p>
+              </li>
+            )
+          )}
+        </ul>
+      ) : (
+        <p>No entities</p>
+      )}
+    </div>
+  ) : (
+    <p>Not provisioned</p>
+  )
+}
+
+<style>
+  h3 {
+    margin: 0.6rem 0 0;
+  }
+  p {
+    margin: 0.2rem 0;
+  }
+</style>

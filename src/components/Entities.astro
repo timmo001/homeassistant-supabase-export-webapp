@@ -12,26 +12,9 @@ const supabase = createClient(
   import.meta.env.SUPABASE_URL,
   import.meta.env.SUPABASE_KEY
 );
-const { data: homeassistant_metadata_response } = await supabase
-  .from("homeassistant_metadata")
-  .select("*")
-  .single();
-homeassistant_metadata =
-  homeassistant_metadata_response as unknown as HomeAssistantMetadata;
 
-if (homeassistant_metadata?.provisioned) {
-  // console.log("Provisioned");
-  let { data: homeassistant_entities_response } = await supabase
-    .from("homeassistant_entities")
-    .select("*")
-    .order("created_at", { ascending: false });
-  homeassistant_entities =
-    homeassistant_entities_response as unknown as Array<HomeAssistantEntity>;
-} else {
-  // console.log("Not provisioned");
-}
-
-const homeassistant_entities_per_entity = homeassistant_entities?.reduce(
+function updateEntities(entities: Array<HomeAssistantEntity>):void{
+const homeassistant_entities_per_entity = entities?.reduce(
   (entities, entity) => {
     if (entities[entity.entity_id]) {
       entities[entity.entity_id].push(entity);
@@ -49,6 +32,28 @@ const homeassistant_entities_per_entity_ordered =
         ([oldId], [newId]) => oldId.localeCompare(newId)
       )
     : undefined;
+
+  }
+
+  const { data: homeassistant_metadata_response } = await supabase
+  .from("homeassistant_metadata")
+  .select("*")
+  .single();
+homeassistant_metadata =
+  homeassistant_metadata_response as unknown as HomeAssistantMetadata;
+
+if (homeassistant_metadata?.provisioned) {
+  // console.log("Provisioned");
+  let { data: homeassistant_entities_response } = await supabase
+    .from("homeassistant_entities")
+    .select("*")
+    .order("created_at", { ascending: false });
+  updateEntities(homeassistant_entities_response as unknown as Array<HomeAssistantEntity>);
+    
+} else {
+  // console.log("Not provisioned");
+}
+
 ---
 
 {

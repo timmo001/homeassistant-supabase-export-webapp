@@ -7,8 +7,9 @@ import type {
 
 let homeassistant_entities:
     | Array<[string, Array<HomeAssistantEntity>]>
-    | null = null,
-  homeassistant_metadata: HomeAssistantMetadata | null = null;
+    | null = null;
+
+let homeassistant_metadata: HomeAssistantMetadata | null = null;
 
 const supabase = createClient(
   import.meta.env.SUPABASE_URL,

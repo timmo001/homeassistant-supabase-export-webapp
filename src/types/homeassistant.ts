@@ -17,3 +17,5 @@ export interface HomeAssistantEntity {
   attributes?: HomeAssistantDictionary;
   last_changed?: string;
 }
+
+export type HomeAssistantEntities = [string, Array<HomeAssistantEntity>];

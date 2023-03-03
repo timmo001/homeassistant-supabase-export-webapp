@@ -49,7 +49,6 @@ if (homeassistant_metadata?.provisioned) {
     .select("*")
     .order("created_at", { ascending: false });
   updateEntities(homeassistant_entities_response as unknown as Array<HomeAssistantEntity>);
-    
 } else {
   // console.log("Not provisioned");
 }
@@ -58,7 +57,7 @@ if (homeassistant_metadata?.provisioned) {
 
 {
   homeassistant_metadata?.provisioned ? (
-    <div>
+    <div class="container">
       {homeassistant_entities_per_entity_ordered ? (
         <ul>
           {homeassistant_entities_per_entity_ordered.map(
@@ -88,5 +87,8 @@ if (homeassistant_metadata?.provisioned) {
   }
   p {
     margin: 0.2rem 0;
+  }
+  .container {
+    margin: 0 auto;
   }
 </style>

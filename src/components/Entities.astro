@@ -5,37 +5,37 @@ import type {
   HomeAssistantMetadata,
 } from "../types/homeassistant";
 
-let homeassistant_entities: Array<HomeAssistantEntity> | undefined = undefined,
-  homeassistant_metadata: HomeAssistantMetadata | undefined = undefined;
+let homeassistant_entities:
+    | Array<[string, Array<HomeAssistantEntity>]>
+    | null = null,
+  homeassistant_metadata: HomeAssistantMetadata | null = null;
 
 const supabase = createClient(
   import.meta.env.SUPABASE_URL,
   import.meta.env.SUPABASE_KEY
 );
 
-function updateEntities(entities: Array<HomeAssistantEntity>):void{
-const homeassistant_entities_per_entity = entities?.reduce(
-  (entities, entity) => {
-    if (entities[entity.entity_id]) {
-      entities[entity.entity_id].push(entity);
-    } else {
-      entities[entity.entity_id] = [entity];
-    }
-    return entities;
-  },
-  {} as Record<string, Array<HomeAssistantEntity>>
-);
+function updateEntities(entities: Array<HomeAssistantEntity>): void {
+  const homeassistant_entities_per_entity = entities?.reduce(
+    (entities, entity) => {
+      if (entities[entity.entity_id]) {
+        entities[entity.entity_id].push(entity);
+      } else {
+        entities[entity.entity_id] = [entity];
+      }
+      return entities;
+    },
+    {} as Record<string, Array<HomeAssistantEntity>>
+  );
 
-const homeassistant_entities_per_entity_ordered =
-  homeassistant_entities_per_entity
+  homeassistant_entities = homeassistant_entities_per_entity
     ? Object.entries(homeassistant_entities_per_entity).sort(
         ([oldId], [newId]) => oldId.localeCompare(newId)
       )
-    : undefined;
+    : null;
+}
 
-  }
-
-  const { data: homeassistant_metadata_response } = await supabase
+const { data: homeassistant_metadata_response } = await supabase
   .from("homeassistant_metadata")
   .select("*")
   .single();
@@ -48,30 +48,27 @@ if (homeassistant_metadata?.provisioned) {
     .from("homeassistant_entities")
     .select("*")
     .order("created_at", { ascending: false });
-  updateEntities(homeassistant_entities_response as unknown as Array<HomeAssistantEntity>);
+  updateEntities(
+    homeassistant_entities_response as unknown as Array<HomeAssistantEntity>
+  );
 } else {
   // console.log("Not provisioned");
 }
-
 ---
 
 {
   homeassistant_metadata?.provisioned ? (
     <div class="container">
-      {homeassistant_entities_per_entity_ordered ? (
-        <ul>
-          {homeassistant_entities_per_entity_ordered.map(
-            ([entity_id, states]) => (
-              <li>
-                <h3>{states[0].attributes?.friendly_name || entity_id}</h3>
-                <p>
-                  {`${states[0].state}${states[0].attributes?.unit_of_measurement}`}
-                  <br />({states.length} records)
-                </p>
-              </li>
-            )
-          )}
-        </ul>
+      {homeassistant_entities ? (
+        homeassistant_entities.map(([entity_id, states]: [string, Array<HomeAssistantEntity>]) => (
+          <div>
+            <h3>{states[0].attributes?.friendly_name || entity_id}</h3>
+            <p>
+              {`${states[0].state}${states[0].attributes?.unit_of_measurement}`}
+              <br />({states.length} records)
+            </p>
+          </div>
+        ))
       ) : (
         <p>No entities</p>
       )}
@@ -89,6 +86,8 @@ if (homeassistant_metadata?.provisioned) {
     margin: 0.2rem 0;
   }
   .container {
+    display: flex;
+    flex-direction: column;
     margin: 0 auto;
   }
 </style>

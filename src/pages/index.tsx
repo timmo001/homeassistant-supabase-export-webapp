@@ -15,9 +15,11 @@ export default function Home({
   metadata,
 }: {
   entities: Array<HomeAssistantEntities>;
-  graphData: Array<[string, Array<GraphValue>]>;
+  graphData: Array<Array<GraphValue>>;
   metadata: HomeAssistantMetadata;
 }): JSX.Element {
+  console.log({ entities, graphData, metadata });
+
   return (
     <>
       <Head>
@@ -53,7 +55,9 @@ export default function Home({
                     }`}
                     <br />({states.length} records)
                   </p>
-                  <Graph values={graphData[key][1]} />
+                  {graphData[key].length > 0 && (
+                    <Graph values={graphData[key]} />
+                  )}
                 </div>
               )
             )}
@@ -68,19 +72,13 @@ export default function Home({
 
 export async function getServerSideProps() {
   const entities = await getEntities(),
-    graphData = entities.map(
-      ([entity_id, states]): [string, Array<GraphValue>] => {
-        if (!states || !Number.isInteger(states[0].state))
-          return [entity_id, []];
-        return [
-          entity_id,
-          states.map((state) => ({
-            date: new Date(state.last_changed).toLocaleDateString(),
-            value: Number(state.state),
-          })),
-        ];
-      }
-    );
+    graphData = entities.map(([entity_id, states]): Array<GraphValue> => {
+      if (!states || Number(states[0].state) < 0) return [];
+      return states.map((state) => ({
+        date: state.last_changed,
+        value: Number(state.state),
+      }));
+    });
 
   return {
     props: {

@@ -315,10 +315,10 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.10.4.tgz#427d5549943a9c6fce808e39ea64dbe60d4047f1"
   integrity sha512-WJgX9nzTqknM393q1QJDJmoW28kUfEnybeTfVNcNAPnIx210RXm2DiXiHzfNPJNIUUb1tJnz/l4QGtJ30PgWmA==
 
-"@supabase/auth-js@2.67.0":
-  version "2.67.0"
-  resolved "https://registry.yarnpkg.com/@supabase/auth-js/-/auth-js-2.67.0.tgz#2cde1126e889c8f941965eeea2c181f916f04fbe"
-  integrity sha512-zbyxFWJmdkQalnDr4vYNtxh//NLBwjPgggZ0hcoY/Ry8c5p9gZV6v972uz/wRxiRSGyNt9xnxbXKLQkDsqEMkQ==
+"@supabase/auth-js@2.67.1":
+  version "2.67.1"
+  resolved "https://registry.yarnpkg.com/@supabase/auth-js/-/auth-js-2.67.1.tgz#b72217136df61d645dcfb7b12c7db8cbb7875a4c"
+  integrity sha512-1SRZG9VkLFz4rtiyEc1l49tMq9jTYu4wJt3pMQEWi7yshZFIBdVH1o5sshk1plQd5LY6GcrPIpCydM2gGDxchA==
   dependencies:
     "@supabase/node-fetch" "^2.6.14"
 
@@ -336,10 +336,10 @@
   dependencies:
     whatwg-url "^5.0.0"
 
-"@supabase/postgrest-js@1.16.3":
-  version "1.16.3"
-  resolved "https://registry.yarnpkg.com/@supabase/postgrest-js/-/postgrest-js-1.16.3.tgz#d8e009e63b9152e46715982a6d706f1450c0af0d"
-  integrity sha512-HI6dsbW68AKlOPofUjDTaosiDBCtW4XAm0D18pPwxoW3zKOE2Ru13Z69Wuys9fd6iTpfDViNco5sgrtnP0666A==
+"@supabase/postgrest-js@1.17.7":
+  version "1.17.7"
+  resolved "https://registry.yarnpkg.com/@supabase/postgrest-js/-/postgrest-js-1.17.7.tgz#2c0cc07c34cfbafcdf15a27e36c42119095ab154"
+  integrity sha512-aOzOYaTADm/dVTNksyqv9KsbhVa1gHz1Hoxb2ZEF2Ed9H7qlWOfptECQWmkEmrrFjtNaiPrgiSaPECvzI/seDA==
   dependencies:
     "@supabase/node-fetch" "^2.6.14"
 
@@ -360,15 +360,15 @@
   dependencies:
     "@supabase/node-fetch" "^2.6.14"
 
-"@supabase/supabase-js@2.47.6":
-  version "2.47.6"
-  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.47.6.tgz#16b390360777f48e4bec9ea209863dfee47214ec"
-  integrity sha512-qObNaqeDOb1+yh8oHdcjGxOVIvNOsOPE+rKr01ODDxWQHtwC2Wsye42BXZDZz7+FJFxEAqNieDqRPrlMRu5VyA==
+"@supabase/supabase-js@2.47.8":
+  version "2.47.8"
+  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.47.8.tgz#6471a356b694e14170a00e6582bdbd0126944ec6"
+  integrity sha512-2GjK8/PrGJYDVBcjqGyM2irBLMQXvvkJLbS8VFPlym2uuNz+pPMnwLbNf5njkknUTy3PamjgIRoADpuPPPA6oA==
   dependencies:
-    "@supabase/auth-js" "2.67.0"
+    "@supabase/auth-js" "2.67.1"
     "@supabase/functions-js" "2.4.3"
     "@supabase/node-fetch" "2.6.15"
-    "@supabase/postgrest-js" "1.16.3"
+    "@supabase/postgrest-js" "1.17.7"
     "@supabase/realtime-js" "2.11.2"
     "@supabase/storage-js" "2.7.1"
 

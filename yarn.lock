@@ -363,10 +363,10 @@
   dependencies:
     "@supabase/node-fetch" "^2.6.14"
 
-"@supabase/supabase-js@2.47.12":
-  version "2.47.12"
-  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.47.12.tgz#27a0f2fda99ce63eecad8a0c1946b84d680b4637"
-  integrity sha512-My8X5K1KwOBFjQhAqIf7QJaQhP5EILjJwAgjzRNjstlMLJmdVBctwRYD6IGDWKzw+i6/aNGuRd5c9/pI/Y6UFw==
+"@supabase/supabase-js@2.47.13":
+  version "2.47.13"
+  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.47.13.tgz#5c8770a5db568af9be892b89dde383a42c7ba4fd"
+  integrity sha512-yhzJIyCGLhtbvFvOgyuugW2PN3mQKtio/fCmX2MV3YgokRAGziQvzsVWqKfj0R4gfjfHwlzYmXgGpGKp42RhGQ==
   dependencies:
     "@supabase/auth-js" "2.67.3"
     "@supabase/functions-js" "2.4.4"

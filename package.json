@@ -18,7 +18,7 @@
     "typescript": "5.9.2"
   },
   "dependencies": {
-    "@supabase/supabase-js": "2.56.0",
+    "@supabase/supabase-js": "2.56.1",
     "next": "15.5.2",
     "react": "19.1.1",
     "react-dom": "19.1.1",

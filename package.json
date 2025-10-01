@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "devDependencies": {
-    "@types/node": "24.5.2",
+    "@types/node": "24.6.1",
     "@types/react": "19.1.15",
     "@types/react-dom": "19.1.9",
     "eslint": "9.36.0",
